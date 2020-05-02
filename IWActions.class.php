@@ -17,8 +17,9 @@ class IWActions
 	private $fontAweSome = NULL;
 	private $text = NULL;
 	private $toolBar = [];
-	public $condition = FALSE;
-	public $imageWidth = 20;
+	private $condition = TRUE;
+	private $imageWidth = 20;
+	private $itemSpace = '1px';
 
 	function __construct($lineSeq)
 	{
@@ -36,27 +37,41 @@ class IWActions
 		//$type =  ['bg' => 'sys__NM__', 'prj' => 'grp__NM__ ', 'usr' => 'usr__NM__'];
 		$categ = explode(',', $categTrue);
 		$imgTrue = strtoupper($categ[0]) . '__NM__' . strtoupper($categ[1]) . '__NM__' . $imgTrue;
-		$tagImg = "<img src='../../../../img/$imgTrue' width={$this->imageWidth}/>";
+		$this->item[0] = "<img src='../../../../img/$imgTrue' width={$this->imageWidth}/>";
 		if (!is_null($imgFalse)) {
 			$categ = explode(',', $categFalse);
 			$imgFalse = strtoupper($categ[0]) . '__NM__' . strtoupper($categ[1]) . '__NM__' . $imgFalse;
-			$tagImg = [$imgTrue, "<img src='../../../../img/$imgFalse' width={$this->imageWidth}/>"];
+			$this->item[1] = "<img src='../../../../img/$imgFalse' width={$this->imageWidth}/>";
 		}
 
-		$this->item = $tagImg;
 		$this->image = Null;
 		$this->fontAweSome = NULL;
 		$this->text = NULL;
 	}
 
+	public function setCondition($condition)
+	{
+		$this->condition = $condition;
+	}
+
 	public function close()
 	{
 		$this->tollBar[$this->id] = $this->item;
-		$this->item = NULL;
+		$this->item = [];
 		$this->image = Null;
 		$this->fontAweSome = NULL;
 		$this->text = NULL;
 		$this->scImage = NULL;
 		$this->id++;
+	}
+
+	public function createToolBars()
+	{
+		$html = '';
+		foreach ($this->tollBar as $key => $value) {
+			if ($this->condition) $html .= $value[0];
+			else $html.= $value[1]
+		}
+		return $html;
 	}
 }
