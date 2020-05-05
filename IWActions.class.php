@@ -28,14 +28,14 @@ class IWActions
 		$this->condition = $condition;
 	}
 
-	public function setSCImage($imgTrue, $categTrue = 'grp,img', $imgFalse = NULL, $categFalse = 'grp,img')
+	public function setSCImage($imgTrue, $categTrue = 'grp,img', $imgFalse = '', $categFalse = 'grp,img')
 	{
-		$categ = explode(',', $categTrue);
+		$categ = empty($categ) ? ['grp', 'img'] : explode(',', $categTrue);
 		$categ[0] =  strtolower($categ[0]) == 'prj' ? 'grp' : strtolower($categ[0]);
 		$imgTrue = $categ[0] . '__NM__' . strtolower($categ[1]) . '__NM__' . $imgTrue;
 		$this->item[0] = "<img src='../_lib/img/$imgTrue' width='{$this->imageWidth}px' />";
-		if (!is_null($imgFalse)) {
-			$categ = explode(',', $categFalse);
+		if (!empty($imgFalse)) {
+			$categ = empty($categ) ? ['grp', 'img'] : explode(',', $categFalse);
 			$categ[0] =  strtolower($categ[0]) == 'prj' ? 'grp' : strtolower($categ[0]);
 			$imgFalse = $categ[0] . '__NM__' . strtolower($categ[1]) . '__NM__' . $imgFalse;
 			$this->item[1] = "<img src='../_lib/img/$imgFalse' width='{$this->imageWidth}px' />";
@@ -49,9 +49,12 @@ class IWActions
 		$this->item[1] = "<img src='../_lib/libraries/$path/actions/img/$imageFalse' width='{$this->imageWidth}px' />";
 	}
 
-	public function setAwesome()
+	public function setAwesome($fontAwesomeTrue, $colorTrue = '', $fontAwesomeFalse = '', $colorFalse = '')
 	{
-		echo "setAwesome 2";
+		$colorTrue = empty($colorTrue) ?: ";color:$colorTrue";
+		$colorFalse = empty($colorFalse) ?: ";color:$colorFalse";
+		$this->item[0]  = "<span style='fontsize:{$this->imageWidth}px  $colorTrue'><i class='$fontAwesomeTrue'></i></span>";
+		$this->item[1]  = "<span style='fontsize:{$this->imageWidth}px  $colorFalse'><i class='$fontAwesomeFalse'></i></span>";
 	}
 
 	public function setCondition($condition)
@@ -86,8 +89,10 @@ class IWActions
 		$html = '';
 		//echo "CreateToobar<br>";
 		foreach ($this->tollBar as $value) {
-			//print_r($value);
-			$html .= ($this->condition) ? $value[0] : $value[1];
+			echo "<pre>";
+			print_r($value);
+			echo "</pre>";
+			$html .= ($this->condition) ? $value[0] : !isset($value[1]) ? '' : $value[1];
 		}
 		return $html;
 	}
