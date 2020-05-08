@@ -1,4 +1,5 @@
-Uma biblioteca para ser usada com Scriptcase.
+# IWAction Versão 1.0.03
+**Uma biblioteca para ser usada com Scriptcase.**
 
 Video explicativo [youtube.com](https://youtu.be/3aI-8MgtbYE)
 
@@ -13,7 +14,7 @@ Grupo [WhatsApp](https://chat.whatsapp.com/I3sg8dHFfQqKJYjVgtQkM8)
 
 # O que é IWAction Classe PHP?
 
-São um conjuntos de scripts php, js, html e css para você poder criar uma barra de ferramentas em linha, nas aplicações do tipo Grid no Scripcase.
+São um conjuntos de scripts php, js, html e css para você poder criar uma barra de ferramentas em linha nas aplicações do tipo Grid no Scripcase.
 
 O que faz essa Biblioteca?
 
@@ -26,18 +27,18 @@ O que faz essa Biblioteca?
 # Instalação
 
 
-Na aplicação Grid, 
+**Na aplicação Grid** 
 
 evento **onscriptinit**
 
-```html
+```php
 sc_include_library('prj','grid','actions-master/IWActions.class.php');
 sc_include_library('prj','grid','actions-master/include.php');
 ```
 
 evento **onrecord**
 
-```html
+```php
 
 $line = {sc_seq_register};
 
@@ -53,15 +54,15 @@ $tb->setItemSpace(5);
 // Utiliza uma barra separadora entre os itens (dark, light)
 $tb->setSeparator('dark'); 
 
-//Apresenta um texto no item . Parâmetros Posicionais
+// Apresenta um texto no item . Parâmetros Posicionais
 // Parâmetro 1 para condição verdadeira, 
-Parâmetro 2 para falsa (Opcional).
+// Parâmetro 2 para falsa (Opcional).
 $tb->setText('Linha 1', 'Linha ~'); 
 
 // Fecha o item e prepara para novo item na barra
 $tb->close(); 
 
-//Determina altura da Imagem
+// Determina altura da Imagem
 $tb->setImageHeight(24); 
 
 // busca imagem na Galeria de imagens do Scriptcase 
@@ -117,21 +118,23 @@ $tb->close();
 {action} = $tb->createToolBar();
 ```
 
-Notas:
+# Notas:
 
 **Parâmtros Posicionais** Cada parâmetro tem sua posição determinada conforme seu conteúdo
 
 **Parâmtros Nomeados** O PHP não suporta (ainda parâmtros nomeados), então criei um Método Mágico para possibilitar informar os parâmtros pelos seus nomes sem a obriagação de posição exata (Na Classe o Método se chama `parsToObj($pars, $default)`)
 
+
+**IMPLEMENTAÇÕES FUTURAS**
+* Apresentação de Tooltip ao passar o mouse sobre os itens
+* Ação do evento ajax onclick da Grid
+* Dialog de Confirmação em SweetAlert antes da execução da Ação em evento Ajax
+
 **Métodos e Bibliotecas de outros autores utilizados**
 
-`get_leaf_dirs($dir)` por [Anton Backer 2006] (https://www.php.net/manual/pt_BR/function.dir.php#60374)
+`get_leaf_dirs($dir)` por [Anton Backer 2006](https://www.php.net/manual/pt_BR/function.dir.php#60374)
 Renomeada para `recursiveDir($dir)`
 
 `jquery-modal` por [Kyle Fox](https://github.com/kylefox/jquery-modal)
-
-**Métodos de outros autores utilizados**
-`get_leaf_dirs($dir)` por [Anton Backer 2006](https://www.php.net/manual/pt_BR/function.dir.php#60374)
-Renomeada para `recursiveDir($dir)`
 
 **NÃO PIRATEIE CÓDIGOS DE OUTROS, RESPEITE OS DIREITOS AUTORAIS**
