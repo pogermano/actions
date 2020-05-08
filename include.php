@@ -36,7 +36,7 @@ $html = <<<HTML
           escapeClose: false,
           clickClose: false,
           showClose: true,
-            fadeDelay: 0.50
+          fadeDelay: 0.50
          });
     });	
 	

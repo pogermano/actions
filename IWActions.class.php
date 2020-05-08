@@ -3,7 +3,7 @@
 	Classe para criação de botões de ação nas linhas de uma Grid Scriptcase
 	Autor: Haroldo B Passos / InfinitusWeb
 	Copyrirght: 2020 / 2020 Versão: 1.01.001 
-	
+	Fase I : Versão Beta Teste  07/05/2020
 	*/
 
 class IWActions
@@ -114,7 +114,7 @@ class IWActions
 
 	public function setModalStyle($value = '')
 	{
-		$p = $this->parsToObj($value, 'maxWidth=80%, width=80%,background=#000,padding=5px,textAlign=center,height=80%');
+		$p = $this->parsToObj($value, 'maxWidth=80%, width=40%,background=#000,padding=5px,textAlign=center,height=80%');
 		$this->modalStyle = "max-width: {$p->maxWidth}; width:{$p->width};height:{$p->height};background:{$p->background};padding:{$p->padding};text-align:{$p->textAlign}";
 		$this->modal = true;
 	}
@@ -146,10 +146,7 @@ class IWActions
 	public function createToolBar()
 	{
 		$html = '';
-		foreach ($this->tollBar as $value) {
-			//echo "<pre>";
-			//print_r($value);
-			//echo "</pre>"; 
+		foreach ($this->toolBar as $value) {
 			$html .= ($this->condition) ? $value[0] : $value[1];
 		}
 		return $html;
