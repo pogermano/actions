@@ -111,7 +111,9 @@ $tb->close();
 Notas:
 
 **Parâmtros Posicionais** Cada parâmetro tem sua posição determinada conforme seu conteúdo
+
 **Parâmtros Nomeados** O PHP não suporta (ainda parâmtros nomeados), então criei um Método Mágico para possibilitar informar os parâmtros pelos seus nomes sem a obriagação de posição exata (Na Classe o Método se chama `parsToObj($pars, $default)`)
+
 **Métodos de outros autores utilizados:
 *  `get_leaf_dirs($dir)` por [Anton Backer 2006] (https://www.php.net/manual/pt_BR/function.dir.php#60374)
 	Renomeada para `recursiveDir($dir)`
