@@ -139,7 +139,7 @@ class IWActions
 			if ($this->condition) $this->item[1] = "<a class='action-link' $a'>{$this->item[1]}</a>";
 		}
 		$this->link = '';
-		$this->tollBar[$this->id] = $this->item;
+		$this->toolBar[$this->id] = $this->item;
 		$this->id++;
 	}
 
