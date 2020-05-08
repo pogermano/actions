@@ -1,10 +1,10 @@
 Uma biblioteca para ser usada com Scriptcase.
 
-Video explicativo [youtube.com](https://youtu.be/3aI-8MgtbYE).
-Conheça [Scriptcase](https://scriptcase.com.br).
-[Fórum](https://forum.scriptcase.com.br/).
-Grupo [Telegram] (https://t.me/joinchat/F1fMxkV3oNu6JVFxfJ1Xqg).
-Grupo [WhatsApp] (https://chat.whatsapp.com/I3sg8dHFfQqKJYjVgtQkM8).
+* Video explicativo [youtube.com](https://youtu.be/3aI-8MgtbYE).
+* Conheça [Scriptcase](https://scriptcase.com.br).
+* [Fórum] de Discussão (https://forum.scriptcase.com.br/).
+* Grupo [Telegram] (https://t.me/joinchat/F1fMxkV3oNu6JVFxfJ1Xqg).
+* Grupo [WhatsApp] (https://chat.whatsapp.com/I3sg8dHFfQqKJYjVgtQkM8).
 
 # O que é IWAction Classe PHP?
 
