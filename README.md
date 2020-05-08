@@ -1,6 +1,6 @@
 Uma biblioteca para ser usada com Scriptcase.
 
-Video explicativo [youtube.com](http://youtube.com/).
+Video explicativo [youtube.com](https://youtu.be/3aI-8MgtbYE).
 
 # O que é IWAction Classe PHP?
 
