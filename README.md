@@ -1,10 +1,6 @@
 Uma biblioteca para ser usada com Scriptcase.
 
 Video explicativo [youtube.com](https://youtu.be/3aI-8MgtbYE).
-Venha conhecer [Scriptcase](https://scripcase.com.br)
-[Fórum](https://forum.scriptcase.com.br/)
-[Grupo WhatsApp](https://chat.whatsapp.com/I3sg8dHFfQqKJYjVgtQkM8)
- 
 
 # O que é IWAction Classe PHP?
 
@@ -125,4 +121,8 @@ Renomeada para `recursiveDir($dir)`
 
 `jquery-modal` por [Kyle Fox](https://github.com/kylefox/jquery-modal)
 
-    **NÃO PIRATEIE CÓDIGOS DE OUTROS, RESPEITE OS DIREITOS AUTORAIS**
+**Métodos de outros autores utilizados**
+`get_leaf_dirs($dir)` por [Anton Backer 2006](https://www.php.net/manual/pt_BR/function.dir.php#60374)
+Renomeada para `recursiveDir($dir)`
+
+**NÃO PIRATEIE CÓDIGOS DE OUTROS, RESPEITE OS DIREITOS AUTORAIS**
