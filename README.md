@@ -116,7 +116,7 @@ Notas:
 
 **Métodos de outros autores utilizados:**
 
-	*  `get_leaf_dirs($dir)` por [Anton Backer 2006] (https://www.php.net/manual/pt_BR/function.dir.php#60374)
+	`get_leaf_dirs($dir)` por [Anton Backer 2006](https://www.php.net/manual/pt_BR/function.dir.php#60374)
 	Renomeada para `recursiveDir($dir)`
 
 **NÃO PIRATEIE CÓDIGOS DE OUTROS, RESPEITE OS DIREITOS AUTORAIS**
