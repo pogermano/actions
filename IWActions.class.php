@@ -145,9 +145,9 @@ class IWActions
 		if ($cursor) $this->cursorClass = $cursor;
 	}
 
-	public function setToolTipBotton()
+	public function setToolTipBottom()
 	{
-		$this->toolTip[1] = 'tooltiptext_botton';
+		$this->toolTip[1] = 'tooltiptext_bottom';
 	}
 	public function setToolTipLeft()
 	{

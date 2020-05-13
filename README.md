@@ -87,7 +87,7 @@ $tb->setToolTipLeft();
 
 // Apreenta ToolTip definido pelo método setToolTip abaixo do item 
 // Não utiliza parâmetros
-$tb->setToolTipBotton();
+$tb->setToolTipBottom();
 
 // Fecha o item e prepara para novo item na barra
 $tb->close(); 
