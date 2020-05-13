@@ -3,7 +3,7 @@ $html = <<<HTML
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.js"></script>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.css" />
 <style type="text/css">
-  .modal a.close-modal[class*="icon-"] {
+.modal a.close-modal[class*="icon-"] {
     top: -10px;
     right: -10px;
     width: 20px;
@@ -22,9 +22,113 @@ $html = <<<HTML
     -moz-box-shadow:    1px 1px 5px rgba(0,0,0,0.5);
     -webkit-box-shadow: 1px 1px 5px rgba(0,0,0,0.5);
     box-shadow:         1px 1px 5px rgba(0,0,0,0.5);
-  }
+}
 
-</style>	
+.tooltip {
+	position: relative;
+	display: inline-block;
+}
+
+.borderBotton {
+	border-bottom: 1px dotted black;
+}
+
+.tooltip .tooltiptext {
+  visibility: hidden;
+  width: 120px;
+  background-color: black;
+  color: #fff;
+  text-align: center;
+  border-radius: 6px;
+  padding: 5px;
+  position: absolute;
+  z-index: 1;
+  bottom: 150%;
+  left: 50%;
+  margin-left: -60px;
+	opacity: 0;
+	transition: opacity 0.7s;
+	word-wrap: break-word;
+}
+
+.tooltip .tooltiptext::after {
+  content: "";
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  margin-left: -5px;
+  border-width: 5px;
+  border-style: solid;
+  border-color: black transparent transparent transparent;
+}
+
+.tooltip:hover .tooltiptext {
+  visibility: visible;
+	opacity: 1;
+}
+
+
+.tooltip .tooltiptext_left {
+  visibility: hidden;
+  width: 120px;
+  background-color: black;
+  color: #fff;
+  text-align: center;
+  border-radius: 6px;
+  padding: 4px;
+  position: absolute;
+  z-index: 1;
+  top: 0px;
+  right: 110%;
+
+}
+
+.tooltip .tooltiptext_left::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 100%;
+  margin-top: -5px;
+  border-width: 4px;
+  border-style: solid;
+  border-color: transparent transparent transparent black;
+}
+
+.tooltip:hover .tooltiptext_left {
+  visibility: visible;
+}
+
+.tooltip .tooltiptext_bottom {
+  visibility: hidden;
+  width: 120px;
+  background-color: black;
+  color: #fff;
+  text-align: center;
+  border-radius: 6px;
+  padding: 5px;
+  position: absolute;
+  z-index: 1;
+  top: 150%;
+  left: 50%;
+  margin-left: -60px;
+}
+
+.tooltip .tooltiptext_bottom::after {
+  content: "";
+  position: absolute;
+  bottom: 100%;
+  left: 50%;
+  margin-left: -5px;
+  border-width: 5px;
+  border-style: solid;
+  border-color: transparent transparent black transparent;
+}
+
+.tooltip:hover .tooltiptext_bottom {
+  visibility: visible;
+}
+</style>
+
 <div  id="login-form"  class = "modal">
 <iframe id=login-form-iframe  style='allowfullscreen:true;border:0;width:100%'></iframe>
 </div><script>

@@ -2,27 +2,29 @@
 /* Classe iwActions
 	Classe para criação de botões de ação nas linhas de uma Grid Scriptcase
 	Autor: Haroldo B Passos / InfinitusWeb
-	Copyrirght: 2020 / 2020 Versão: 1.01.001 
-	Fase I : Versão Beta Teste  07/05/2020
-	*/
+	Copyrirght: 2020 / 2020 Versão: 1.00.004 
+	Fase II : Versão Beta Teste 12/05/2020 1.01.005 ...
+*/
 
 class IWActions
 {
 	private $lineSeq;
-
-	private $item = [];
+	private $item = '';
 	private $id = 0;
 	private $condition = TRUE;
 	private $imageHeight = 20;
 	private $pathImage;
 	private $pathAction;
 	private $itemSpace = '2';
+	private $color = '';
+	private $textStyle = '';
 	private $toolBar = [];
-	private $separator = false;
-	private $imgSeparator = '';
+	private $toolTip = false;
+	private $itemSeparator = "<div Style ='float: left; display: inline-block;padding-right: 2px'></div>";
 	private $link = '';
 	private $modal = false;
 	private $modalStyle = 'max-width: 80%; width: 40%; background: rgb(0, 0, 0); padding: 5px; text-align: center; height: 80%';
+	private $cursorClass = '';
 
 	function __construct($lineSeq)
 	{
@@ -39,38 +41,21 @@ class IWActions
 		$this->pathAction = $path . '/actions-master';
 	}
 
-	public function setCondition($condition)
+	public function setItemSpace($itemSpace)
 	{
-		$this->condition = $condition;
+		$this->itemSpace = $itemSpace;
+		$this->itemSeparator = "<div Style ='float: left; display: inline-block;padding-right:{$this->itemSpace}px'></div>";
 	}
 
-	public function setSCImage($imgTrue, $categTrue = 'grp,img', $imgFalse = '', $categFalse = '')
+	public function setSeparator($flag = 'light')
 	{
-		$categ = explode(',', $categTrue);
-		$categ[0] =  strtolower($categ[0]) == 'prj' ? 'grp' : strtolower($categ[0]);
-		$imgTrue = $categ[0] . '__NM__' . strtolower($categ[1]) . '__NM__' . $imgTrue;
-		$this->item[0] = $this->getSeparator() . "<img src='../_lib/img/$imgTrue' height='{$this->imageHeight}px' style='padding-right: {$this->itemSpace}px'/>";
-		if (!empty($imgFalse)) {
-			$categ = empty($categFalse) ? $categ : explode(',', $categFalse);
-			$categ[0] =  strtolower($categ[0]) == 'prj' ? 'grp' : strtolower($categ[0]);
-			$imgFalse = $categ[0] . '__NM__' . strtolower($categ[1]) . '__NM__' . $imgFalse;
-			$this->item[1] = $this->getSeparator() . "<img src='../_lib/img/$imgFalse' height='{$this->imageHeight}px' style='padding-right: {$this->itemSpace}px'/>";
+		if ($flag) {
+			$space = $this->itemSpace / 2;
+			$image = $flag === 'dark' ? 'separator-dark.png' : 'separator-light.png';
+			$this->itemSeparator = "<div Style = 'float: left; display: inline-block;'><img src='{$this->pathAction}/img/$image' height='{$this->imageHeight}px' style='padding: 0px {$space}px;' /></div>";
+		} else {
+			$this->itemSeparator = "<div Style ='float: left; display: inline-block;padding-right: {$this->itemSpace}px'></div>";
 		}
-	}
-
-	public function setImage($imageTrue, $imageFalse = '')
-	{
-		$path = $this->pathImage . '/';
-		$this->item[0] = $this->getSeparator() . "<img src='$path{$imageTrue}'  height='{$this->imageHeight}px' style='padding-right: {$this->itemSpace}px'/>";
-		$this->item[1] = empty($imageFalse) ? '' : $this->getSeparator() . "<img src='.$path{$imageFalse}' height='{$this->imageHeight}px' style='padding-right: {$this->itemSpace}'/>";
-	}
-
-	public function setAwesome($fontAwesomeTrue, $colorTrue = '', $fontAwesomeFalse = '', $colorFalse = '')
-	{
-		$colorTrue = empty($colorTrue) ?: ";color:$colorTrue";
-		$colorFalse = empty($colorFalse) ?: ";color:$colorFalse";
-		$this->item[0]  = $this->getSeparator() . "<span style='font-size:{$this->imageHeight}px;  $colorTrue; padding-right: {$this->itemSpace}px'><i class='$fontAwesomeTrue'></i></span>";
-		$this->item[1]  = $this->getSeparator() . "<span style='font-size:{$this->imageHeight}px;  $colorFalse; padding-right: {$this->itemSpace}px'><i class='$fontAwesomeFalse'></i></span>";
 	}
 
 	public function setImageHeight($imageHeight)
@@ -78,28 +63,62 @@ class IWActions
 		$this->imageHeight = $imageHeight;
 	}
 
-	public function setItemSpace($itemSpace)
+	public function setCondition($condition)
 	{
-		$this->itemSpace = $itemSpace;
+		$this->condition = $condition;
+	}
+
+	public function setColor($colorTrue, $colorFalse = '')
+	{
+		$this->color = ($this->condition) ? $colorTrue : $colorFalse;
+	}
+
+	public function setSCImage($imgTrue, $categTrue = 'grp,img', $imgFalse = '', $categFalse = '')
+	{
+		if ($this->condition) {
+			$categ = explode(',', $categTrue);
+			$image = $imgTrue;
+		} else {
+			$categ = empty($categFalse) ? explode(',', $categTrue) : explode(',', $categFalse);
+			$image = $imgFalse;
+		}
+		if ($image) {
+			$categ[0] =  strtolower($categ[0]) == 'prj' ? 'grp' : strtolower($categ[0]);
+			$image = $categ[0] . '__NM__' . strtolower($categ[1]) . '__NM__' . $image;
+			$this->item = "<img src='../_lib/img/$image' height='{$this->imageHeight}px'/>";
+		}
+	}
+
+	public function setImage($imageTrue, $imageFalse = '')
+	{
+		$path = $this->pathImage . '/';
+		$image = ($this->condition) ? $imageTrue : $imageFalse;
+		if ($image) {
+			$this->item = "<img src='$path{$image}'  height='{$this->imageHeight}px' />";
+		}
+	}
+
+	public function setAwesome($fontAwesomeTrue, $fontAwesomeFalse = '')
+	{
+		$fontAwesome = ($this->condition) ? $fontAwesomeTrue : $fontAwesomeFalse;
+		$color = ($this->color) ? 'color: ' . $this->color : '';
+		$this->item  = "<span style='font-size:{$this->imageHeight}px;$color;'><i class='$fontAwesome'></i></span>";
+	}
+
+	public function setTextStyle($styleTrue, $styleFalse = '')
+	{
+		$this->textStyle = ($this->condition) ? $this->parsToStyle($styleTrue) : $this->parsToStyle($styleFalse);
 	}
 
 	public function setText($textTrue, $textFalse = '')
 	{
-		$this->item[0] = $this->getSeparator() . "<span style='padding-right: {$this->itemSpace}px'>$textTrue</span>";
-		$this->item[1] = $this->getSeparator() . "<span style='padding-right: {$this->itemSpace}px'>$textFalse</span>";
-	}
-
-	public function setSeparator($flag = 'light')
-	{
-		if ($flag) {
-			$this->separator = $flag;
-			$space = $this->itemSpace / 2;
-			$this->itemSpace = 0;
-			$image = $flag === 'dark' ? 'separator-dark.png' : 'separator-light.png';
-			$this->imgSeparator = "<img src='{$this->pathAction}/img/$image' height='{$this->imageHeight}px' style='padding: 0px {$space}px;' />";
+		if ($this->textStyle) {
+			$style = $this->textStyle;
 		} else {
-			$this->imgSeparator = '';
+			$style = ($this->color) ? "style= 'color: {$this->color};'" : '';
 		}
+		$text = ($this->condition) ? $textTrue : $textFalse;
+		if ($text) $this->item =  "<span $style>$text</span>";
 	}
 
 	public function setLink($linkTrue, $linkFalse = '')
@@ -119,36 +138,86 @@ class IWActions
 		$this->modal = true;
 	}
 
-	private function getSeparator()
+	public function setCursor($cursorTrue = '', $cursorFalse = '')
 	{
-		if ($this->id > 0) {
-			return $this->imgSeparator;
-		}
+		$cursor = $this->condition ? $cursorTrue : $cursorFalse;
+		$cursor = ($cursor) ? 'cursor:' . $cursor : '';
+		if ($cursor) $this->cursorClass = $cursor;
+	}
+
+	public function setToolTipBotton()
+	{
+		$this->toolTip[1] = 'tooltiptext_botton';
+	}
+	public function setToolTipLeft()
+	{
+		$this->toolTip[1] = 'tooltiptext_left';
+	}
+
+	public function setToolTip($hintTrue, $hintFalse = '')
+	{
+		$this->toolTip[1] = (isset($this->toolTip[1])) ? $this->toolTip[1] : 'tooltiptext';
+		$hint = ($this->condition) ? $hintTrue : $hintFalse;
+		$this->toolTip[0] = $hint;
 	}
 
 	public function close()
 	{
-		if ($this->modal) {
-			$a = "href=#login-form onclick=\"modalIframeSrc('{$this->link}');modalStyle('{$this->modalStyle}')\" rel=modal:open";
-		} else {
-			$a = "href = '{$this->link}'";
-		}
 		if ($this->link) {
-			if ($this->condition) $this->item[0] = "<a class='action-link' $a>{$this->item[0]}</a>";
-		} else {
-			if ($this->condition) $this->item[1] = "<a class='action-link' $a'>{$this->item[1]}</a>";
+			if ($this->modal) {
+				$a = "href=#login-form onclick=\"modalIframeSrc('{$this->link}');modalStyle('{$this->modalStyle}')\" rel=modal:open";
+			} else {
+				$a = "href = '{$this->link}'";
+			}
+			$this->item = "<a class='action-link' $a>{$this->item}</a>";
 		}
+
+		if ($this->toolTip[0]) {
+			$style = "Style = 'float: left; {$this->cursorClass}'";
+			$this->item = "<div class='tooltip' $style>{$this->item}<span class='{$this->toolTip[1]}'>{$this->toolTip[0]}</span></div>";
+		} else {
+			$style = "Style = 'float: left; display: inline-block;{$this->cursorClass}'";
+			$this->item = "<div $style>{$this->item}</div>";
+		}
+
 		$this->link = '';
+		$this->cursorClass = '';
+		$this->color = '';
+		$this->textStyle = '';
+		$this->toolTip = false;
 		$this->toolBar[$this->id] = $this->item;
+		$this->item = '';
 		$this->id++;
+	}
+
+	private function setReset()
+	{
+		$this->item = '';
+		$this->id = 0;
+		$this->condition = TRUE;
+		$this->imageHeight = 20;
+		$this->itemSpace = '2';
+		$this->toolBar = [];
+		$this->separator = false;
+		$this->imgSeparator = '';
+		$this->color = '';
+		$this->textStyle = '';
+		$this->link = '';
+		$this->toolTip = false;
+		$this->modal = false;
+		$this->modalStyle = 'max-width: 80%; width: 40%; background: rgb(0, 0, 0); padding: 5px; text-align: center; height: 80%';
+		$this->cursorClass = '';
 	}
 
 	public function createToolBar()
 	{
 		$html = '';
-		foreach ($this->toolBar as $value) {
-			$html .= ($this->condition) ? $value[0] : $value[1];
+		foreach ($this->toolBar as $key => $value) {
+			$strip_tags = trim(strip_tags($value, '<img><i>'));
+			$value = ($strip_tags) ? $value : '';
+			$html .= ($key > 0 && !empty($value)) ? $this->itemSeparator . $value : $value;
 		}
+		$this->setReset();
 		return $html;
 	}
 
@@ -174,6 +243,12 @@ class IWActions
 	}
 
 
+	private function parsToStyle($style)
+	{
+		$style = 'style = ' . str_replace(['=', ','], [':', ';'], $style);
+		return $style;
+	}
+
 	//Método Mágico -> permite utilizar parametros nomeados nos demais métodos da classe
 	//By Haroldo
 	private function parsToObj($pars, $default)
@@ -182,6 +257,10 @@ class IWActions
 		$res = [];
 		foreach ($pars as $value) {
 			$arr = explode('=', $value);
+			if (is_numeric(strpos($arr[0], '-'))) {
+				$atr = explode('-', $arr[0]);
+				$arr[0] = $atr[0] . ucfirst($atr[1]);
+			}
 			$arr[0] = trim($arr[0]);
 			$arr[1] = trim($arr[1]);
 			if (strpos($arr[1], ';')) {

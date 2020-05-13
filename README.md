@@ -1,4 +1,4 @@
-# IWAction Versão 1.0.03
+# IWAction Versão 1.0.05  12/05/2020
 **Uma biblioteca para ser usada com Scriptcase.**
 
 Video explicativo [youtube.com](https://youtu.be/3aI-8MgtbYE)
@@ -57,7 +57,37 @@ $tb->setSeparator('dark');
 // Apresenta um texto no item . Parâmetros Posicionais
 // Parâmetro 1 para condição verdadeira, 
 // Parâmetro 2 para falsa (Opcional).
+// Use setColor para atribuir cor as fontes
+// Uset setTextStyle para atribuir etilos aos textos
 $tb->setText('Linha 1', 'Linha ~'); 
+
+// Atribui cores ao texto ou a Fontes Awesome
+// Parâmetro 1 para item apresentado na condição verdadeira, 
+// Parâmetro 2 para item apresentado na condição falsa (Opcional).
+$tb->setColor('blue','red');
+
+// Atribui estilos ao texto (qualquer estilo CSS aplicável a texto)
+// Parâmetro 1 para item apresentado na condição verdadeira, 
+// Parâmetro 2 para item apresentado na condição falsa (Opcional).
+$tb->setTextStyle('color=blue, font-size=24', 'color=red, font-size=20');
+
+// Muda o estilo do cursor ao item, veja estilos em [W3C](https://www.w3schools.com/cssref/pr_class_cursor.asp)
+// Parâmetro 1 para item apresentado na condição verdadeira, 
+// Parâmetro 2 para item apresentado na condição falsa (Opcional).
+$tb->setCursor('pointer', 'help');
+
+// Apreenta ToolTip acima do item
+// Parâmetro 1 para item apresentado na condição verdadeira, 
+// Parâmetro 2 para item apresentado na condição falsa (Opcional).
+$tb->setToolTip('Texto','Texto');
+
+// Apreenta ToolTip definido pelo método setToolTip a esquerda do item 
+// Não utiliza parâmetros
+$tb->setTollTipLeft();
+
+// Apreenta ToolTip definido pelo método setToolTip abaixo do item 
+// Não utiliza parâmetros
+$tb->setTollTipBotton();
 
 // Fecha o item e prepara para novo item na barra
 $tb->close(); 
@@ -107,14 +137,14 @@ $tb->close();
 // Informa que o item da Barra de Ferramentas terá como exibição uma Fonte Awesome
 // Parametros Posicionais
 // Parâmetro 1 : Classe de Estilo para fonte em caso de COndição Verdadeira
-// Parâmetro 2 : (Opcional) Côr da Fonte Awesome informada no Parâmtro 1.
-// Parâmetro 3 : (Opcional) Fonte Awesome para Concidção Falsa
-// Parâmetro 4 : (Opcional) Côr da Fonte Awesome informada no Parâmtro 3.
-$tb->setAwesome('far fa-thumbs-up','blue','far fa-thumbs-down', 'red');
+// Parâmetro 2 :  (Opcional) Fonte Awesome para Concidção Falsa
+// User setColor para atribuir cor as fontes
+$tb->setAwesome('far fa-thumbs-up','far fa-thumbs-down');
 
 $tb->close();
 
-//Retorno Html da barra de ferramentas
+// Retorno Html da barra de ferramentas
+// Fecha a Barra de Ferramentas e Deixa Preparado para crianão de outra Barra.
 {action} = $tb->createToolBar();
 ```
 
