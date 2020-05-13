@@ -2,7 +2,8 @@
 
 **Re1ease 1.0.06 13/05/2020** 
 
-    * BUG - Corrigido nome do método setToolTipBottom, o qual estava se referenciando incorretamente a classe de estilos para apresentar o ToolTip abaixo do item.
+    * BUG - Corrigido nome do método setToolTipBottom, o qual estava se referenciando incorretamente a
+    classe de estilos para apresentar o ToolTip abaixo do item.
 
 
 **Re1ease 1.0.05 12/05/2020 Requer atualização completa** 
