@@ -3,7 +3,7 @@
 	Classe para criação de botões de ação nas linhas de uma Grid Scriptcase
 	Autor: Haroldo B Passos / InfinitusWeb
 	Copyrirght: 2020 / 2020 Versão: 1.00.004 
-	Fase II : Versão Beta Teste 12/05/2020 1.01.005 ...
+	Fase II : Versão Beta Teste 13/05/2020 1.01.006 ...
 */
 
 class IWActions
