@@ -1,27 +1,36 @@
 <?php
-$html = <<<HTML
+echo <<<HTML
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.js"></script>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.css" />
 <style type="text/css">
+a.action-link {
+  text-decoration: none;
+}
+
+a.action-link:hover {
+  text-decoration: none;
+  	border-bottom: 1px dotted #7DB6E2;
+}
+
 .modal a.close-modal[class*="icon-"] {
-    top: -10px;
-    right: -10px;
-    width: 20px;
-    height: 20px;
-    color: #fff;
-    line-height: 1.25;
-    text-align: center;
-    text-decoration: none;
-    text-indent: 0;
-    background: #900;
-    border: 2px solid #fff;
-    -webkit-border-radius: 26px;
-    -moz-border-radius: 26px;
-    -o-border-radius: 26px;
-    -ms-border-radius: 26px;
-    -moz-box-shadow:    1px 1px 5px rgba(0,0,0,0.5);
-    -webkit-box-shadow: 1px 1px 5px rgba(0,0,0,0.5);
-    box-shadow:         1px 1px 5px rgba(0,0,0,0.5);
+  top: -10px;
+  right: -10px;
+  width: 20px;
+  height: 20px;
+  color: #fff;
+  line-height: 1.25;
+  text-align: center;
+  text-decoration: none;
+  text-indent: 0;
+  background: #900;
+  border: 2px solid #fff;
+  -webkit-border-radius: 26px;
+  -moz-border-radius: 26px;
+  -o-border-radius: 26px;
+  -ms-border-radius: 26px;
+  -moz-box-shadow:    1px 1px 5px rgba(0,0,0,0.5);
+  -webkit-box-shadow: 1px 1px 5px rgba(0,0,0,0.5);
+  box-shadow:         1px 1px 5px rgba(0,0,0,0.5);
 }
 
 .tooltip {
@@ -29,13 +38,13 @@ $html = <<<HTML
 	display: inline-block;
 }
 
-.borderBotton {
+.borderBottom {
 	border-bottom: 1px dotted black;
 }
 
 .tooltip .tooltiptext {
   visibility: hidden;
-  width: 120px;
+  width: auto;
   background-color: black;
   color: #fff;
   text-align: center;
@@ -70,7 +79,7 @@ $html = <<<HTML
 
 .tooltip .tooltiptext_left {
   visibility: hidden;
-  width: 120px;
+  width: auto;
   background-color: black;
   color: #fff;
   text-align: center;
@@ -100,7 +109,7 @@ $html = <<<HTML
 
 .tooltip .tooltiptext_bottom {
   visibility: hidden;
-  width: 120px;
+  width: auto;
   background-color: black;
   color: #fff;
   text-align: center;
@@ -128,32 +137,33 @@ $html = <<<HTML
   visibility: visible;
 }
 </style>
-
-<div  id="login-form"  class = "modal">
-<iframe id=login-form-iframe  style='allowfullscreen:true;border:0;width:100%'></iframe>
-</div><script>
-
-    $(document).ready(function() {
-	    $('a[href="#login-form"]').click(function(event) {
-         event.preventDefault();
-         $(this).modal({
-          escapeClose: false,
+<div  id="modal-form"  class = "modal">
+  <iframe id=modal-form-iframe  style='allowfullscreen:true;border:0;width:100%'></iframe>
+</div>
+<script>
+$(document).ready(function () {
+     $('a[href="#login-form"]').click(function(event) {
+        event.preventDefault();
+        $(this).modal({
+            escapeClose: false,
           clickClose: false,
           showClose: true,
           fadeDelay: 0.50
-         });
-    });	
-	
-	    $('#login-form-iframe').css('height',$(".modal").height()-40);
-		
+        });
+        $('#modal-form-iframe').css('height',$(".modal").height()-40);
     });
-function modalIframeSrc(src) {
-  $('#login-form-iframe').attr('src',src);
+});
+function modalHtml(html) {
+   $('#modal-form').html(html);
 }
+function modalIframeSrc(src) {
+    $('#modal-form-iframe').attr('src', src);
+    $('#modal-form').modal();
+}
+
 function modalStyle(style) {
-  $('#login-form').attr('style',style);	
-  $('#login-form-iframe').css('height',$(".modal").height()-40);
+    $('#modal-form').attr('style', style);
+    $('#modal-form-iframe').css('height', $(".modal").height() - 40);
 }
 </script>
 HTML;
-echo $html;

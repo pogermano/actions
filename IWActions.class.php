@@ -18,15 +18,18 @@ class IWActions
 	private $itemSpace = '2';
 	private $color = '';
 	private $textStyle = '';
+	private $text = false;
 	private $toolBar = [];
+	private $borderBottom = false;
 	private $toolTip = false;
 	private $itemSeparator = "<div Style ='float: left; display: inline-block;padding-right: 2px'></div>";
 	private $link = '';
 	private $modal = false;
 	private $modalStyle = 'max-width: 80%; width: 40%; background: rgb(0, 0, 0); padding: 5px; text-align: center; height: 80%';
-	private $cursorClass = '';
+	private $cursor = '';
+	private $toolTipWordWrap =  false;
 
-	function __construct($lineSeq)
+	function __construct($lineSeq = 0)
 	{
 		$this->lineSeq = $lineSeq;
 		$dirs = $this->recursiveDir('../_lib/libraries');
@@ -56,6 +59,11 @@ class IWActions
 		} else {
 			$this->itemSeparator = "<div Style ='float: left; display: inline-block;padding-right: {$this->itemSpace}px'></div>";
 		}
+	}
+
+	public function setBorderBottom()
+	{
+		$this->borderBottom = true;
 	}
 
 	public function setImageHeight($imageHeight)
@@ -112,13 +120,8 @@ class IWActions
 
 	public function setText($textTrue, $textFalse = '')
 	{
-		if ($this->textStyle) {
-			$style = $this->textStyle;
-		} else {
-			$style = ($this->color) ? "style= 'color: {$this->color};'" : '';
-		}
-		$text = ($this->condition) ? $textTrue : $textFalse;
-		if ($text) $this->item =  "<span $style>$text</span>";
+		$this->text = true;
+		$this->item = ($this->condition) ? $textTrue : $textFalse;
 	}
 
 	public function setLink($linkTrue, $linkFalse = '')
@@ -138,11 +141,11 @@ class IWActions
 		$this->modal = true;
 	}
 
-	public function setCursor($cursorTrue = '', $cursorFalse = '')
+	public function setCursor($cursorTrue = 'default', $cursorFalse = '')
 	{
 		$cursor = $this->condition ? $cursorTrue : $cursorFalse;
 		$cursor = ($cursor) ? 'cursor:' . $cursor : '';
-		if ($cursor) $this->cursorClass = $cursor;
+		if ($cursor) $this->cursor = $cursor;
 	}
 
 	public function setToolTipBottom()
@@ -154,6 +157,11 @@ class IWActions
 		$this->toolTip[1] = 'tooltiptext_left';
 	}
 
+	public function setToolTipWordWrap($nChars = false)
+	{
+		$this->toolTipWordWrap = $nChars;
+	}
+
 	public function setToolTip($hintTrue, $hintFalse = '')
 	{
 		$this->toolTip[1] = (isset($this->toolTip[1])) ? $this->toolTip[1] : 'tooltiptext';
@@ -163,50 +171,65 @@ class IWActions
 
 	public function close()
 	{
+		$borderBottom = ($this->borderBottom) ? ' borderBottom' : '';
+
+		if ($this->text) {
+			$style = $this->textStyle;
+			$color = ($this->color) && strpos($style, 'color') === false ? "color: {$this->color};" : '';
+			$style = ($color || $style) ? "$style{$color}" : '';
+			$class = ($this->borderBottom) ? "class=$borderBottom" : '';
+			$this->item =  "<span $class $style>{$this->item}</span>";
+			$borderBottom = $borderBottom ?: '';
+		}
+
 		if ($this->link) {
 			if ($this->modal) {
-				$a = "href=#login-form onclick=\"modalIframeSrc('{$this->link}');modalStyle('{$this->modalStyle}')\" rel=modal:open";
+				$a = "href='#modal-form' onmouseup=\"modalStyle('{$this->modalStyle}');modalIframeSrc('{$this->link}');\"  "; //rel=modal:open
 			} else {
-				$a = "href = '{$this->link}'";
+				$a = "href='{$this->link}'";
 			}
-			$this->item = "<a class='action-link' $a>{$this->item}</a>";
+			$this->item = "<a class='action-link{$borderBottom}' $a>{$this->item}</a>";
+			$borderBottom = $borderBottom ?: '';
 		}
 
 		if ($this->toolTip[0]) {
-			$style = "Style = 'float: left; {$this->cursorClass}'";
+			$style = "Style = 'float: left; {$this->cursor}'";
+			$this->toolTip[0] = ($this->toolTipWordWrap) ? wordwrap($this->toolTip[0], $this->toolTipWordWrap, "<br/>\n") : $this->toolTip[0];
 			$this->item = "<div class='tooltip' $style>{$this->item}<span class='{$this->toolTip[1]}'>{$this->toolTip[0]}</span></div>";
 		} else {
-			$style = "Style = 'float: left; display: inline-block;{$this->cursorClass}'";
-			$this->item = "<div $style>{$this->item}</div>";
+			$style = "Style = 'float: left; display: inline-block;{$this->cursor}'";
+			$class = ($this->borderBottom) ? "class=$borderBottom" : '';
+			$this->item = "<div $class $style>{$this->item}</div>";
 		}
 
-		$this->link = '';
-		$this->cursorClass = '';
-		$this->color = '';
-		$this->textStyle = '';
-		$this->toolTip = false;
 		$this->toolBar[$this->id] = $this->item;
-		$this->item = '';
 		$this->id++;
+		$this->setReset();
 	}
 
-	private function setReset()
+	private function setReset($total = false)
 	{
-		$this->item = '';
-		$this->id = 0;
-		$this->condition = TRUE;
-		$this->imageHeight = 20;
-		$this->itemSpace = '2';
-		$this->toolBar = [];
-		$this->separator = false;
-		$this->imgSeparator = '';
+		$this->link = '';
+		$this->cursor = '';
 		$this->color = '';
 		$this->textStyle = '';
-		$this->link = '';
+		$this->text = false;
 		$this->toolTip = false;
+		$this->borderBottom = false;
 		$this->modal = false;
 		$this->modalStyle = 'max-width: 80%; width: 40%; background: rgb(0, 0, 0); padding: 5px; text-align: center; height: 80%';
-		$this->cursorClass = '';
+		$this->item = '';
+		$this->toolTipWordWrap =  false;
+
+		if ($total) {
+			$this->id = 0;
+			$this->condition = TRUE;
+			$this->imageHeight = 20;
+			$this->itemSpace = '2';
+			$this->toolBar = [];
+			$this->separator = false;
+			$this->imgSeparator = '';
+		}
 	}
 
 	public function createToolBar()
@@ -217,8 +240,18 @@ class IWActions
 			$value = ($strip_tags) ? $value : '';
 			$html .= ($key > 0 && !empty($value)) ? $this->itemSeparator . $value : $value;
 		}
-		$this->setReset();
+		$this->setReset(true);
 		return $html;
+	}
+
+	public function create()
+	{
+		return $this->createToolBar();
+	}
+
+	public function getPathAction()
+	{
+		return $this->pathAction;
 	}
 
 	//By Anton Backer 2006 get_leaf_dirs($dir) 
@@ -242,10 +275,9 @@ class IWActions
 		return $array;
 	}
 
-
 	private function parsToStyle($style)
 	{
-		$style = 'style = ' . str_replace(['=', ','], [':', ';'], $style);
+		$style = "style='" . str_replace(['=', ','], [':', ';'], $style) . "'";
 		return $style;
 	}
 

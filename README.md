@@ -52,7 +52,12 @@ $tb->setCondition({campo}=='S');
 $tb->setItemSpace(5); 
 
 // Utiliza uma barra separadora entre os itens (dark, light)
+// Parâmtro 1 valores dark ou light (padrão)
 $tb->setSeparator('dark'); 
+
+// Acrescenta uma borda pontilhada abaixo do texto
+// Sem parâmetros
+$tb->setBorderBottom();
 
 // Apresenta um texto no item . Parâmetros Posicionais
 // Parâmetro 1 para condição verdadeira, 
@@ -146,6 +151,8 @@ $tb->close();
 // Retorno Html da barra de ferramentas
 // Fecha a Barra de Ferramentas e Deixa Preparado para crianão de outra Barra.
 {action} = $tb->createToolBar();
+ou
+{action} = $tb->create();
 ```
 
 # Notas:
